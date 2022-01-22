@@ -1,0 +1,11 @@
+version: '3.3'
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password_db
+      MYSQL_DATABASE: message-scheduler
+      MYSQL_USER: user_db
+      MYSQL_PASSWORD: password_db
+    ports:
+      - "3306:3306"

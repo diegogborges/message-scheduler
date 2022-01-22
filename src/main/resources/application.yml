@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: message-scheduler
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  jmx:
+    enabled: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/message-scheduler?allowPublicKeyRetrieval=true&sslMode=DISABLED
+    username: user_db
+    password: password_db
+  flyway:
+    enabled: false
