@@ -12,6 +12,8 @@ CREATE TABLE `message_scheduler` (
 CREATE TABLE `message_status` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(100) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   constraint UK_MESSAGE_STATUS_DESCRIPTION
   		unique (description)
@@ -19,6 +21,8 @@ CREATE TABLE `message_status` (
 
 CREATE TABLE `message_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
   `description` varchar(100) NOT NULL,
   `status` int(1) DEFAULT 1 NOT NULL,
   PRIMARY KEY (`id`),
