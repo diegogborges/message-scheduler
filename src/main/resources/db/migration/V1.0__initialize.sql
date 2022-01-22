@@ -10,7 +10,7 @@ CREATE TABLE `message_scheduler` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 CREATE TABLE `message_status` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   constraint UK_MESSAGE_STATUS_DESCRIPTION
@@ -18,7 +18,7 @@ CREATE TABLE `message_status` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 CREATE TABLE `message_type` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(100) NOT NULL,
   `status` int(1) DEFAULT 1 NOT NULL,
   PRIMARY KEY (`id`),
