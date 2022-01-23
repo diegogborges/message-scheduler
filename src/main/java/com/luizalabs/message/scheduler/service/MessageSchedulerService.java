@@ -4,6 +4,8 @@ import com.luizalabs.message.scheduler.model.MessageScheduler;
 import com.luizalabs.message.scheduler.model.MessageStatus;
 import com.luizalabs.message.scheduler.model.MessageType;
 import com.luizalabs.message.scheduler.model.MessageTypeScheduler;
+import com.luizalabs.message.scheduler.model.enumerable.MessageStatusEnum;
+import com.luizalabs.message.scheduler.model.enumerable.MessageTypeEnum;
 import com.luizalabs.message.scheduler.repository.MessageSchedulerRepository;
 import com.luizalabs.message.scheduler.repository.MessageTypeSchedulerRepository;
 import com.luizalabs.message.scheduler.v1.model.input.MessageSchedulerInput;
@@ -32,10 +34,11 @@ public class MessageSchedulerService {
 
     List<MessageTypeScheduler> messageTypeSchedulerList = new ArrayList<>();
     messageSchedulerInput.getMessageTypes().forEach(t -> {
+      MessageTypeEnum.find(t);
       final MessageTypeScheduler messageTypeScheduler = MessageTypeScheduler.builder()
           .messageScheduler(messageScheduler)
-          .messageType(MessageType.builder().id(1).build())
-          .messageStatus(MessageStatus.builder().id(t).build())
+          .messageType(MessageType.builder().id(t).build())
+          .messageStatus(MessageStatus.builder().id(MessageStatusEnum.NOT_SENT.getValue()).build())
           .build();
       messageTypeSchedulerList.add(messageTypeScheduler);
     });

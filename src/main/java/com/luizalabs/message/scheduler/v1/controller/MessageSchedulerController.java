@@ -1,6 +1,5 @@
 package com.luizalabs.message.scheduler.v1.controller;
 
-import com.luizalabs.message.scheduler.model.MessageScheduler;
 import com.luizalabs.message.scheduler.model.MessageTypeScheduler;
 import com.luizalabs.message.scheduler.service.MessageSchedulerService;
 import com.luizalabs.message.scheduler.v1.model.input.MessageSchedulerInput;
