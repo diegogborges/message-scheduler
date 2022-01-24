@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.luizalabs.message.scheduler.domain.enumerable.MessageTypeEnum;
 import com.luizalabs.message.scheduler.repository.MessageSchedulerRepository;
 import com.luizalabs.message.scheduler.service.MessageSchedulerService;
 import com.luizalabs.message.scheduler.v1.model.request.MessageSchedulerRequest;
@@ -63,6 +64,22 @@ class MessageSchedulerControllerTest {
         .getContentAsString();
   }
 
+  @Test
+  @Rollback
+  @Transactional
+  @SneakyThrows
+  void testValidateSchemaSaveMessageSchedulerWithNonExistentMessageType() {
+    final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
+    messageSchedulerRequest.setMessageTypes(Arrays.asList(5, MessageTypeEnum.WHATSAPP.getValue()));
+    this.mockMvc.perform(post(urlPathResource)
+        .content(asJsonString(messageSchedulerRequest))
+        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+        .andExpect(status().is5xxServerError())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+  }
+
   private static String asJsonString(final Object obj) {
     try {
       return new ObjectMapper().writeValueAsString(obj);
@@ -77,6 +94,9 @@ class MessageSchedulerControllerTest {
         .phone("5599999999999")
         .customerUuid("uuid")
         .sendDate(LocalDateTime.now().plusDays(2))
-        .messageTypes(Arrays.asList(1)).build();
+        .messageTypes(Arrays.asList(
+            MessageTypeEnum.MAIL.getValue(),
+            MessageTypeEnum.PUSH.getValue()
+        )).build();
   }
 }
