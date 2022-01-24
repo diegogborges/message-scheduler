@@ -1,8 +1,8 @@
 package com.luizalabs.message.scheduler.v1.controller;
 
-import com.luizalabs.message.scheduler.model.MessageTypeScheduler;
+import com.luizalabs.message.scheduler.domain.entity.MessageTypeScheduler;
 import com.luizalabs.message.scheduler.service.MessageSchedulerService;
-import com.luizalabs.message.scheduler.v1.model.input.MessageSchedulerInput;
+import com.luizalabs.message.scheduler.v1.model.request.MessageSchedulerRequest;
 
 import java.util.List;
 import javax.validation.Valid;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/message/scheduler")
 public class MessageSchedulerController {
 
-  private MessageSchedulerService messageSchedulerService;
+  private final MessageSchedulerService messageSchedulerService;
 
   @Autowired
   public MessageSchedulerController(MessageSchedulerService messageSchedulerService) {
@@ -28,7 +28,7 @@ public class MessageSchedulerController {
 
   @PostMapping()
   public ResponseEntity<List<MessageTypeScheduler>> save(
-      @RequestBody @Valid MessageSchedulerInput messageSchedulerInput) {
+      @RequestBody @Valid MessageSchedulerRequest messageSchedulerInput) {
 
     return new ResponseEntity<>(
         messageSchedulerService.save(messageSchedulerInput), null, HttpStatus.CREATED);

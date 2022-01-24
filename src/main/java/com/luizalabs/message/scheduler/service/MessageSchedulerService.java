@@ -1,14 +1,15 @@
 package com.luizalabs.message.scheduler.service;
 
-import com.luizalabs.message.scheduler.model.MessageScheduler;
-import com.luizalabs.message.scheduler.model.MessageStatus;
-import com.luizalabs.message.scheduler.model.MessageType;
-import com.luizalabs.message.scheduler.model.MessageTypeScheduler;
-import com.luizalabs.message.scheduler.model.enumerable.MessageStatusEnum;
-import com.luizalabs.message.scheduler.model.enumerable.MessageTypeEnum;
+import com.luizalabs.message.scheduler.assembler.MessageSchedulerAssembler;
+import com.luizalabs.message.scheduler.domain.entity.MessageScheduler;
+import com.luizalabs.message.scheduler.domain.entity.MessageStatus;
+import com.luizalabs.message.scheduler.domain.entity.MessageType;
+import com.luizalabs.message.scheduler.domain.entity.MessageTypeScheduler;
+import com.luizalabs.message.scheduler.domain.enumerable.MessageStatusEnum;
+import com.luizalabs.message.scheduler.domain.enumerable.MessageTypeEnum;
 import com.luizalabs.message.scheduler.repository.MessageSchedulerRepository;
 import com.luizalabs.message.scheduler.repository.MessageTypeSchedulerRepository;
-import com.luizalabs.message.scheduler.v1.model.input.MessageSchedulerInput;
+import com.luizalabs.message.scheduler.v1.model.request.MessageSchedulerRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +22,18 @@ public class MessageSchedulerService {
 
   private final MessageTypeSchedulerRepository messageTypeSchedulerRepository;
   private final MessageSchedulerRepository messageSchedulerRepository;
+  private final MessageSchedulerAssembler messageSchedulerAssembler;
 
   @Autowired
   public MessageSchedulerService(MessageTypeSchedulerRepository messageTypeSchedulerRepository,
-                                 MessageSchedulerRepository messageSchedulerRepository) {
+                                 MessageSchedulerRepository messageSchedulerRepository,
+                                 MessageSchedulerAssembler messageSchedulerAssembler) {
     this.messageTypeSchedulerRepository = messageTypeSchedulerRepository;
     this.messageSchedulerRepository = messageSchedulerRepository;
+    this.messageSchedulerAssembler = messageSchedulerAssembler;
   }
 
-  public List<MessageTypeScheduler> save(final MessageSchedulerInput messageSchedulerInput) {
+  public List<MessageTypeScheduler> save(final MessageSchedulerRequest messageSchedulerInput) {
     final MessageScheduler messageScheduler = saveMessageScheduler(messageSchedulerInput);
 
     List<MessageTypeScheduler> messageTypeSchedulerList = new ArrayList<>();
@@ -46,14 +50,9 @@ public class MessageSchedulerService {
     return messageTypeSchedulerRepository.saveAll(messageTypeSchedulerList);
   }
 
-  private MessageScheduler saveMessageScheduler(MessageSchedulerInput messageSchedulerInput) {
-    MessageScheduler messageScheduler = MessageScheduler.builder()
-        .sendDate(messageSchedulerInput.getSendDate())
-        .customerUuid(messageSchedulerInput.getCustomerUuid())
-        .phone(messageSchedulerInput.getPhone())
-        .email(messageSchedulerInput.getEmail())
-        .build();
-
+  private MessageScheduler saveMessageScheduler(MessageSchedulerRequest messageSchedulerRequest) {
+    MessageScheduler messageScheduler =
+        this.messageSchedulerAssembler.toMessageSchedulerModel(messageSchedulerRequest);
     messageScheduler = messageSchedulerRepository.save(messageScheduler);
     return messageScheduler;
   }

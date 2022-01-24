@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.luizalabs.message.scheduler.repository.MessageSchedulerRepository;
 import com.luizalabs.message.scheduler.service.MessageSchedulerService;
-import com.luizalabs.message.scheduler.v1.model.input.MessageSchedulerInput;
+import com.luizalabs.message.scheduler.v1.model.request.MessageSchedulerRequest;
 
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
@@ -71,8 +71,8 @@ class MessageSchedulerControllerTest {
     }
   }
 
-  private MessageSchedulerInput getMessageTypeScheduler() {
-    return MessageSchedulerInput.builder()
+  private MessageSchedulerRequest getMessageTypeScheduler() {
+    return MessageSchedulerRequest.builder()
         .email("teste@gmail.com")
         .phone("5599999999999")
         .customerUuid("uuid")

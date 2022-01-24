@@ -1,4 +1,4 @@
-package com.luizalabs.message.scheduler.v1.model.input;
+package com.luizalabs.message.scheduler.v1.model.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -14,7 +14,7 @@ import lombok.Setter;
 @Builder
 @Setter
 @Getter
-public class MessageSchedulerInput {
+public class MessageSchedulerRequest {
 
   @JsonSerialize(using = LocalDateTimeSerializer.class)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")

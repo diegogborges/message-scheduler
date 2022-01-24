@@ -1,4 +1,4 @@
-package com.luizalabs.message.scheduler.model.enumerable;
+package com.luizalabs.message.scheduler.domain.enumerable;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.luizalabs.message.scheduler.exception.MessageTypeNotFoundException;
@@ -12,12 +12,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MessageTypeEnum {
 
-  SMS(1),
-  MAIL(2),
-  PUSH(3),
-  WHATSAPP(4);
+  SMS(1, "sms"),
+  MAIL(2, "email"),
+  PUSH(3, "push"),
+  WHATSAPP(4, "whatsApp");
 
   private final Integer value;
+  private final String description;
 
   public static MessageTypeEnum getValue(final Integer value) {
     for (MessageTypeEnum e : MessageTypeEnum.values()) {

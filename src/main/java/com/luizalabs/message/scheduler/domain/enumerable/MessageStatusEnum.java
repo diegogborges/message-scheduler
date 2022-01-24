@@ -1,12 +1,14 @@
-package com.luizalabs.message.scheduler.model.enumerable;
+package com.luizalabs.message.scheduler.domain.enumerable;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.util.Arrays;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum MessageStatusEnum {
 
   NOT_SENT(1, "NOT_SENT"),
@@ -15,11 +17,6 @@ public enum MessageStatusEnum {
 
   private Integer value;
   private String description;
-
-  MessageStatusEnum(Integer value, String description) {
-    this.value = value;
-    this.description = description;
-  }
 
   @JsonCreator
   public static MessageStatusEnum find(final Integer value) {

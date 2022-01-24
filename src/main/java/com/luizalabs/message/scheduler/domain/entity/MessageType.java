@@ -1,4 +1,4 @@
-package com.luizalabs.message.scheduler.model;
+package com.luizalabs.message.scheduler.domain.entity;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -14,20 +14,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 @AllArgsConstructor
 @Builder
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "message_status",
+@Table(name = "message_type",
     uniqueConstraints = {
-      @UniqueConstraint(name = "UK_MESSAGE_STATUS_DESCRIPTION", columnNames = "description")
+      @UniqueConstraint(name = "UK_MESSAGE_TYPE_DESCRIPTION", columnNames = "description")
     }
 )
-public class MessageStatus implements Serializable {
+public class MessageType implements Serializable {
 
-  private static final long serialVersionUID = 5167528624176922372L;
+  private static final long serialVersionUID = 4901913277041755528L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,4 +37,8 @@ public class MessageStatus implements Serializable {
   @Column(length = 100)
   @NotNull
   private String description;
+
+  @NotNull
+  @Type(type = "numeric_boolean")
+  private Boolean status;
 }

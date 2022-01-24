@@ -1,4 +1,4 @@
-package com.luizalabs.message.scheduler.model;
+package com.luizalabs.message.scheduler.domain.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
