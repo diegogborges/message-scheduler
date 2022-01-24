@@ -15,6 +15,7 @@ import com.luizalabs.message.scheduler.v1.model.response.MessageSchedulerRespons
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collections;
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
@@ -78,9 +79,30 @@ class MessageSchedulerControllerTest extends BaseEndpointTest {
   @Rollback
   @Transactional
   @SneakyThrows
-  void saveMessageSchedulerWithEmptyListMessageType() {
+  void saveMessageSchedulerWithNullListMessageType() {
     final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
     messageSchedulerRequest.setMessageTypes(null);
+
+    final MessageSchedulerResponse response = super.postIsCreated(
+        this.urlPathResource,
+        messageSchedulerRequest,
+        MessageSchedulerResponse.class
+    );
+
+    Assertions.assertNotNull(response);
+    Assertions.assertEquals(response.getCustomerUuid(), messageSchedulerRequest.getCustomerUuid());
+    Assertions.assertEquals(response.getEmail(), messageSchedulerRequest.getEmail());
+    Assertions.assertEquals(response.getPhone(), messageSchedulerRequest.getPhone());
+    Assertions.assertEquals(4, response.getMessageTypes().size());
+  }
+
+  @Test
+  @Rollback
+  @Transactional
+  @SneakyThrows
+  void saveMessageSchedulerWithEmptyListMessageType() {
+    final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
+    messageSchedulerRequest.setMessageTypes(Collections.emptyList());
 
     final MessageSchedulerResponse response = super.postIsCreated(
         this.urlPathResource,

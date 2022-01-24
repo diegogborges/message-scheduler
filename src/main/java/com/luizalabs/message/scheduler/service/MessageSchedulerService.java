@@ -14,6 +14,7 @@ import com.luizalabs.message.scheduler.v1.model.response.MessageSchedulerRespons
 import com.luizalabs.message.scheduler.v1.model.response.MessageTypeDto;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,14 +67,12 @@ public class MessageSchedulerService {
       final MessageSchedulerRequest messageSchedulerRequest,
       final MessageScheduler messageScheduler) {
 
-    Optional<List<Integer>> messageTypes =
-        Optional.of(messageSchedulerRequest)
-            .map(MessageSchedulerRequest::getMessageTypes);
+    final List<Integer> messageTypes =
+        Optional.of(messageSchedulerRequest).map(MessageSchedulerRequest::getMessageTypes)
+            .orElse(Collections.emptyList());
 
     if (messageTypes.isEmpty()) {
-      messageSchedulerRequest.setMessageTypes(new ArrayList<>());
-      MessageTypeEnum.getAllEnums()
-          .forEach(e -> messageSchedulerRequest.getMessageTypes().add(e.getValue()));
+      messageSchedulerRequest.getAllMessageTypes();
     }
 
     List<MessageTypeScheduler> messageTypeSchedulerList = new ArrayList<>();

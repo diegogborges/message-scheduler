@@ -3,8 +3,10 @@ package com.luizalabs.message.scheduler.v1.model.request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.luizalabs.message.scheduler.domain.enumerable.MessageTypeEnum;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Builder;
@@ -24,4 +26,9 @@ public class MessageSchedulerRequest {
   private String customerUuid;
   private String message;
   private List<Integer> messageTypes;
+
+  public void getAllMessageTypes() {
+    this.messageTypes = new ArrayList<>();
+    MessageTypeEnum.getAllEnums().forEach(e -> this.getMessageTypes().add(e.getValue()));
+  }
 }
