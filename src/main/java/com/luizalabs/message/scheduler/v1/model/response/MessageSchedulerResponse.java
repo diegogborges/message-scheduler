@@ -1,7 +1,5 @@
 package com.luizalabs.message.scheduler.v1.model.response;
 
-import com.luizalabs.message.scheduler.domain.entity.MessageType;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,5 +16,5 @@ public class MessageSchedulerResponse {
   private String email;
   private String phone;
   private String customerUuid;
-  private List<MessageType> messageTypes;
+  private List<MessageTypeDto> messageTypes;
 }

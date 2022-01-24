@@ -2,11 +2,14 @@ package com.luizalabs.message.scheduler.domain.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -45,12 +48,19 @@ public class MessageScheduler implements Serializable {
   @Column(name = "customer_uuid", length = 100)
   private String customerUuid;
 
+  @OneToMany(mappedBy = "messageScheduler", cascade = CascadeType.ALL)
+  private List<MessageTypeScheduler> messageTypeSchedulers;
+
   @Column(name = "created_at")
   @CreationTimestamp
   private LocalDateTime createdAt;
 
   @Column(name = "updated_at")
   private LocalDateTime updatedAt;
+
+  public void setMessageTypeSchedulers(List<MessageTypeScheduler> messageTypeSchedulers) {
+    this.messageTypeSchedulers = messageTypeSchedulers;
+  }
 
   @PrePersist
   private void beforePersist() {

@@ -23,7 +23,7 @@ import org.hibernate.annotations.Type;
 @NoArgsConstructor
 @Table(name = "message_type",
     uniqueConstraints = {
-      @UniqueConstraint(name = "UK_MESSAGE_TYPE_DESCRIPTION", columnNames = "description")
+        @UniqueConstraint(name = "UK_MESSAGE_TYPE_DESCRIPTION", columnNames = "description")
     }
 )
 public class MessageType implements Serializable {
