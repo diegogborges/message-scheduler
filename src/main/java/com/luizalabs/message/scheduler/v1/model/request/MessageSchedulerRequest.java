@@ -25,7 +25,6 @@ import lombok.Setter;
 public class MessageSchedulerRequest {
 
   @NotNull
-  @NotBlank
   @JsonSerialize(using = LocalDateTimeSerializer.class)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
   @Schema(required = true, description = "Date to send message", example = "2022-01-22T17:34:29 with format yyyy-MM-dd'T'HH:mm:ss")
