@@ -3,7 +3,10 @@ package com.luizalabs.message.scheduler.domain.enumerable;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.luizalabs.message.scheduler.exception.MessageTypeNotFoundException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,5 +37,9 @@ public enum MessageTypeEnum {
     return Arrays.asList(MessageTypeEnum.values()).stream()
         .filter(s -> s.value.equals(value)).findFirst()
         .orElseThrow(() -> new MessageTypeNotFoundException(value));
+  }
+
+  public static List<MessageTypeEnum> getAllEnums() {
+    return new ArrayList<>(Arrays.asList(MessageTypeEnum.values()));
   }
 }

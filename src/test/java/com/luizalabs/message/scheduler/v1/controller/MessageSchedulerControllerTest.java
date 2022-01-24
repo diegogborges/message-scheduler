@@ -44,7 +44,7 @@ class MessageSchedulerControllerTest extends BaseEndpointTest {
   @Rollback
   @Transactional
   @SneakyThrows
-  void testValidateSchemaSaveMessageScheduler() {
+  void saveMessageScheduler() {
     final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
     final MessageSchedulerResponse response = super.postIsCreated(
         this.urlPathResource,
@@ -62,7 +62,7 @@ class MessageSchedulerControllerTest extends BaseEndpointTest {
   @Rollback
   @Transactional
   @SneakyThrows
-  void testValidateSchemaSaveMessageSchedulerWithNonExistentMessageType() {
+  void saveMessageSchedulerWithNonExistentMessageType() {
     final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
     messageSchedulerRequest.setMessageTypes(Arrays.asList(5, MessageTypeEnum.WHATSAPP.getValue()));
     final String json = this.mockMvc.perform(post(urlPathResource)
@@ -78,16 +78,21 @@ class MessageSchedulerControllerTest extends BaseEndpointTest {
   @Rollback
   @Transactional
   @SneakyThrows
-  void testValidateSchemaSaveMessageSchedulerWithEmptyListMessageType() {
+  void saveMessageSchedulerWithEmptyListMessageType() {
     final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
     messageSchedulerRequest.setMessageTypes(null);
-    final String json = this.mockMvc.perform(post(urlPathResource)
-        .content(asJsonString(messageSchedulerRequest))
-        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(status().is5xxServerError())
-        .andReturn()
-        .getResponse()
-        .getContentAsString();
+
+    final MessageSchedulerResponse response = super.postIsCreated(
+        this.urlPathResource,
+        messageSchedulerRequest,
+        MessageSchedulerResponse.class
+    );
+
+    Assertions.assertNotNull(response);
+    Assertions.assertEquals(response.getCustomerUuid(), messageSchedulerRequest.getCustomerUuid());
+    Assertions.assertEquals(response.getEmail(), messageSchedulerRequest.getEmail());
+    Assertions.assertEquals(response.getPhone(), messageSchedulerRequest.getPhone());
+    Assertions.assertEquals(4, response.getMessageTypes().size());
   }
 
   @Test

@@ -11,9 +11,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MessageStatusEnum {
 
-  NOT_SENT(1, "NOT_SENT"),
-  SENT(2, "SENT"),
-  FAILED(3, "FAILED");
+  NOT_SENT(1, "not_sent"),
+  SENT(2, "sent"),
+  FAILED(3, "failed");
 
   private Integer value;
   private String description;

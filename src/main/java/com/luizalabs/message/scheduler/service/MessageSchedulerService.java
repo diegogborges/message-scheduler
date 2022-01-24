@@ -15,6 +15,7 @@ import com.luizalabs.message.scheduler.v1.model.response.MessageTypeDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,20 +37,9 @@ public class MessageSchedulerService {
     final MessageScheduler messageScheduler =
         this.messageSchedulerAssembler.toMessageSchedulerModel(messageSchedulerRequest);
 
-    List<MessageTypeScheduler> messageTypeSchedulerList = new ArrayList<>();
-    messageSchedulerRequest.getMessageTypes().forEach(t -> {
-      final MessageTypeEnum messageTypeEnum = MessageTypeEnum.find(t);
-      final MessageTypeScheduler messageTypeScheduler = MessageTypeScheduler.builder()
-          .messageScheduler(messageScheduler)
-          .messageType(MessageType.builder()
-              .id(t).description(messageTypeEnum.getDescription())
-              .build())
-          .messageStatus(MessageStatus.builder().id(MessageStatusEnum.NOT_SENT.getValue()).build())
-          .build();
-      messageTypeSchedulerList.add(messageTypeScheduler);
-    });
+    messageScheduler.setMessageTypeSchedulers(
+        prepareListMessageType(messageSchedulerRequest, messageScheduler));
 
-    messageScheduler.setMessageTypeSchedulers(messageTypeSchedulerList);
     final MessageScheduler messageSchedulerResult =
         messageSchedulerRepository.save(messageScheduler);
 
@@ -70,6 +60,35 @@ public class MessageSchedulerService {
     return messageSchedulerRepository.findById(messageScheduledId)
         .orElseThrow(() -> new NotFoundException(
             String.format("Message Scheduler with id: %s not found!", messageScheduledId)));
+  }
+
+  private List<MessageTypeScheduler> prepareListMessageType(
+      final MessageSchedulerRequest messageSchedulerRequest,
+      final MessageScheduler messageScheduler) {
+
+    Optional<List<Integer>> messageTypes =
+        Optional.of(messageSchedulerRequest)
+            .map(MessageSchedulerRequest::getMessageTypes);
+
+    if (messageTypes.isEmpty()) {
+      messageSchedulerRequest.setMessageTypes(new ArrayList<>());
+      MessageTypeEnum.getAllEnums()
+          .forEach(e -> messageSchedulerRequest.getMessageTypes().add(e.getValue()));
+    }
+
+    List<MessageTypeScheduler> messageTypeSchedulerList = new ArrayList<>();
+    messageSchedulerRequest.getMessageTypes().forEach(t -> {
+      final MessageTypeEnum messageTypeEnum = MessageTypeEnum.find(t);
+      final MessageTypeScheduler messageTypeScheduler = MessageTypeScheduler.builder()
+          .messageScheduler(messageScheduler)
+          .messageType(MessageType.builder()
+              .id(t).description(messageTypeEnum.getDescription())
+              .build())
+          .messageStatus(MessageStatus.builder().id(MessageStatusEnum.NOT_SENT.getValue()).build())
+          .build();
+      messageTypeSchedulerList.add(messageTypeScheduler);
+    });
+    return messageTypeSchedulerList;
   }
 
   private MessageSchedulerResponse prepareResponse(final MessageScheduler messageSchedulerResult) {
