@@ -16,5 +16,6 @@ public class MessageSchedulerResponse {
   private String email;
   private String phone;
   private String customerUuid;
+  private String message;
   private List<MessageTypeDto> messageTypes;
 }

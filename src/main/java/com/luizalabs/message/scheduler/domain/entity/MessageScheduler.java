@@ -48,6 +48,9 @@ public class MessageScheduler implements Serializable {
   @Column(name = "customer_uuid", length = 100)
   private String customerUuid;
 
+  @Column(length = 255)
+  private String message;
+
   @OneToMany(mappedBy = "messageScheduler", cascade = CascadeType.ALL)
   private List<MessageTypeScheduler> messageTypeSchedulers;
 

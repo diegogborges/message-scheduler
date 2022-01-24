@@ -5,6 +5,7 @@ CREATE TABLE `message_scheduler` (
   `email` varchar(100) DEFAULT NULL,
   `phone` varchar(100) DEFAULT NULL,
   `send_date` datetime NOT NULL,
+  `message` varchar(255) DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;

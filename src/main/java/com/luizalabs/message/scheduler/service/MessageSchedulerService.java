@@ -90,6 +90,7 @@ public class MessageSchedulerService {
         .email(messageSchedulerResult.getEmail())
         .customerUuid(messageSchedulerResult.getCustomerUuid())
         .phone(messageSchedulerResult.getPhone())
+        .message(messageSchedulerResult.getMessage())
         .messageTypes(messageTypeDtoList)
         .build();
   }
