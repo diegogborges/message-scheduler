@@ -4,6 +4,10 @@ import com.luizalabs.message.scheduler.service.MessageSchedulerService;
 import com.luizalabs.message.scheduler.v1.model.request.MessageSchedulerRequest;
 import com.luizalabs.message.scheduler.v1.model.response.MessageSchedulerResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,16 @@ public class MessageSchedulerController {
   }
 
   @GetMapping("/{messageScheduledId}")
+  @Operation(summary = "Get Message Scheduler")
+  @ApiResponses(
+      value = {
+          @ApiResponse(responseCode = "200", description = "OK"),
+          @ApiResponse(responseCode = "400", description = "Invalid id"),
+          @ApiResponse(responseCode = "404", description = "Message Scheduler not found"),
+          @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+          @ApiResponse(responseCode = "502", description = "Bad Gateway")
+      }
+  )
   public ResponseEntity<MessageSchedulerResponse> getByMessageScheduledId(
       @PathVariable Long messageScheduledId) {
     final MessageSchedulerResponse messageSchedulerResponse
@@ -37,6 +51,14 @@ public class MessageSchedulerController {
   }
 
   @PostMapping()
+  @Operation(summary = "Create Message Scheduler")
+  @ApiResponses(
+      value = {
+          @ApiResponse(responseCode = "201", description = "Created"),
+          @ApiResponse(responseCode = "400", description = "Invalid Request Body"),
+          @ApiResponse(responseCode = "500", description = "Internal Server Error")
+      }
+  )
   public ResponseEntity<MessageSchedulerResponse> save(
       @RequestBody @Valid MessageSchedulerRequest messageSchedulerInput) {
 
@@ -47,6 +69,16 @@ public class MessageSchedulerController {
   }
 
   @DeleteMapping("/{messageScheduledId}")
+  @Operation(summary = "Delete Message Scheduler")
+  @ApiResponses(
+      value = {
+          @ApiResponse(responseCode = "200", description = "OK"),
+          @ApiResponse(responseCode = "400", description = "Invalid id"),
+          @ApiResponse(responseCode = "404", description = "Message Scheduler not found"),
+          @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+          @ApiResponse(responseCode = "502", description = "Bad Gateway")
+      }
+  )
   public ResponseEntity<Boolean> delete(@PathVariable Long messageScheduledId) {
     messageSchedulerService.delete(messageScheduledId);
     return new ResponseEntity<>(true, null, HttpStatus.OK);

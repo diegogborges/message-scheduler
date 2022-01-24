@@ -19,6 +19,7 @@
 		<hibernate-jpamodelgen.version>5.2.12.Final</hibernate-jpamodelgen.version>
 		<data-jpa.version>2.2.6.RELEASE</data-jpa.version>
 		<modelmapper.version>2.3.5</modelmapper.version>
+		<springdoc-openapi.version>1.5.10</springdoc-openapi.version>
 	</properties>
 	<dependencies>
 
@@ -91,6 +92,13 @@
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
 			<version>${modelmapper.version}</version>
+		</dependency>
+
+		<!-- springdoc-openapi -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>${springdoc-openapi.version}</version>
 		</dependency>
 	</dependencies>
 
