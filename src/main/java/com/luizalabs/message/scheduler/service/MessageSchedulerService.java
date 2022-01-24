@@ -56,11 +56,17 @@ public class MessageSchedulerService {
     return prepareResponse(messageSchedulerResult);
   }
 
-  public void delete(final MessageScheduler messageScheduled) {
-    messageSchedulerRepository.delete(messageScheduled);
+  public void delete(final Long messageScheduledId) {
+    final MessageScheduler messageScheduler = this.findByIdOrThrow(messageScheduledId);
+    messageSchedulerRepository.delete(messageScheduler);
   }
 
-  public MessageScheduler findByIdOrThrow(final Long messageScheduledId) {
+  public MessageSchedulerResponse findById(final Long messageScheduledId) {
+    final MessageScheduler messageScheduler = this.findByIdOrThrow(messageScheduledId);
+    return prepareResponse(messageScheduler);
+  }
+
+  private MessageScheduler findByIdOrThrow(final Long messageScheduledId) {
     return messageSchedulerRepository.findById(messageScheduledId)
         .orElseThrow(() -> new NotFoundException(
             String.format("Message Scheduler with id: %s not found!", messageScheduledId)));

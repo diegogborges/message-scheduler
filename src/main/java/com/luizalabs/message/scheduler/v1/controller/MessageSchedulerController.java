@@ -1,6 +1,5 @@
 package com.luizalabs.message.scheduler.v1.controller;
 
-import com.luizalabs.message.scheduler.domain.entity.MessageScheduler;
 import com.luizalabs.message.scheduler.service.MessageSchedulerService;
 import com.luizalabs.message.scheduler.v1.model.request.MessageSchedulerRequest;
 import com.luizalabs.message.scheduler.v1.model.response.MessageSchedulerResponse;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +28,14 @@ public class MessageSchedulerController {
     this.messageSchedulerService = messageSchedulerService;
   }
 
+  @GetMapping("/{messageScheduledId}")
+  public ResponseEntity<MessageSchedulerResponse> getByMessageScheduledId(
+      @PathVariable Long messageScheduledId) {
+    final MessageSchedulerResponse messageSchedulerResponse
+        = this.messageSchedulerService.findById(messageScheduledId);
+    return new ResponseEntity<>(messageSchedulerResponse, null, HttpStatus.OK);
+  }
+
   @PostMapping()
   public ResponseEntity<MessageSchedulerResponse> save(
       @RequestBody @Valid MessageSchedulerRequest messageSchedulerInput) {
@@ -40,9 +48,7 @@ public class MessageSchedulerController {
 
   @DeleteMapping("/{messageScheduledId}/delete")
   public ResponseEntity<Boolean> delete(@PathVariable Long messageScheduledId) {
-    final MessageScheduler messageScheduler =
-        messageSchedulerService.findByIdOrThrow(messageScheduledId);
-    messageSchedulerService.delete(messageScheduler);
+    messageSchedulerService.delete(messageScheduledId);
     return new ResponseEntity<>(true, null, HttpStatus.OK);
   }
 }
