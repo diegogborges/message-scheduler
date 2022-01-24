@@ -46,7 +46,7 @@ public class MessageSchedulerController {
     return new ResponseEntity<>(messageSchedulerResponse, null, HttpStatus.CREATED);
   }
 
-  @DeleteMapping("/{messageScheduledId}/delete")
+  @DeleteMapping("/{messageScheduledId}")
   public ResponseEntity<Boolean> delete(@PathVariable Long messageScheduledId) {
     messageSchedulerService.delete(messageScheduledId);
     return new ResponseEntity<>(true, null, HttpStatus.OK);
