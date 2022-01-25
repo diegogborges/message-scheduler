@@ -77,6 +77,7 @@ Esta é a lista das variáveis de ambiente utilizadas pela aplicação, basta al
 | SPRING_DATASOURCE_HOST | Endereço de conexão com o banco de dados | `String` | `localhost` |
 | SPRING_DATASOURCE_PORT | Porta de conexão com o banco de dados | `Integer` | `3306` |
 | SPRING_DATASOURCE_DATABASE | Nome do banco de dados | `String` | `message-scheduler` |
+| SPRING_DATASOURCE_DRIVER_CLASS_NAME | Nome do driver de conexão com o banco de dados | `String` | `com.mysql.jdbc.Driver` |
 | SPRING_DATASOURCE_USERNAME | Usuário do banco de dados | `String` | `user_db` |
 | SPRING_DATASOURCE_PASSWORD | Senha do banco de dados | `String` | `password_db` |
 | SPRING_FLYWAY_ENABLED | Habilitar o Flyway | `Boolean` | `true` |
