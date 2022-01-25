@@ -15,7 +15,7 @@ spring:
   jmx:
     enabled: false
   datasource:
-    url: jdbc:${SPRING_DATASOURCE_ID:mysql}://${SPRING_DATASOURCE_HOST:localhost}:${SPRING_DATASOURCE_PORT:3306}/${SPRING_DATASOURCE_DATABASE:message-scheduler}?allowPublicKeyRetrieval=true&sslMode=DISABLED
+    url: jdbc:${SPRING_DATASOURCE_ID:mysql}://${SPRING_DATASOURCE_HOST:localhost}:${SPRING_DATASOURCE_PORT:3306}/${SPRING_DATASOURCE_DATABASE:message-scheduler}?allowPublicKeyRetrieval=true&useSSL=false
     username: ${SPRING_DATASOURCE_USERNAME:user_db}
     password: ${SPRING_DATASOURCE_PASSWORD:password_db}
   flyway:
