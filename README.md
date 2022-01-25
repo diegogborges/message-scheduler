@@ -16,17 +16,17 @@ Aplicação para criar agendamentos de comunicação por tipos de mensagens, pod
 
 ## Instalação
 
-Antes de inicializar o projeto, são necessários os seguintes recursos:
+Antes de inicializar o projeto, será necessário ter o MySQL:
 
 * __MySQL__ - Banco de dados utilizado para armazenar as informações dos agendamentos de comunicação;
 
-Caso estes recursos não existam, eles podem ser adquiridos e instalados na máquina local através do `Docker`:
+Caso este recurso não exista, ele pode ser adquirido e instalado na máquina local através do `Docker`:
 
 ```sh
 docker-compose up -d
 ```
 
-Os bancos de dados serão criados, porém, eles só serão populados pelo `Flyway` após a primeira execução.
+O banco de dados sera criado, porém, ele só sera populado pelo `Flyway` após a primeira execução.
 
 Por fim, com o `Java 11` instalado, basta baixar as dependências do projeto e realizar a compilação:
 
