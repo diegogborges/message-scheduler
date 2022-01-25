@@ -1,0 +1,34 @@
+version: 2.0
+
+jobs:
+  test:
+    docker:
+      - image: circleci/openjdk:11
+      - image: circleci/mysql:latest
+        environment:
+          - MYSQL_ROOT_PASSWORD: password_db
+          - MYSQL_DATABASE: message-scheduler
+          - MYSQL_USER: user_db
+          - MYSQL_PASSWORD: password_db
+    steps:
+      - checkout
+      - run: ./mvnw test coveralls:report
+      - store_artifacts:
+          path: target
+
+  build:
+    docker:
+      - image: circleci/openjdk:11
+    steps:
+      - checkout
+      - run: ./mvnw package -Dmaven.test.skip=true
+
+workflows:
+  version: 2
+
+  build-and-test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
