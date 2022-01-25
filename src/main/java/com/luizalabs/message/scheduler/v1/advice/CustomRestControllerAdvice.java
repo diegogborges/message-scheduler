@@ -1,8 +1,6 @@
 package com.luizalabs.message.scheduler.v1.advice;
 
 
-import com.luizalabs.message.scheduler.exception.BadGatewayException;
-import com.luizalabs.message.scheduler.exception.ConflictException;
 import com.luizalabs.message.scheduler.exception.InternalServerErrorException;
 import com.luizalabs.message.scheduler.exception.NotFoundException;
 import com.luizalabs.message.scheduler.v1.model.response.BaseResponseError;
@@ -43,21 +41,9 @@ public class CustomRestControllerAdvice {
     return new BaseResponseError(HttpStatus.METHOD_NOT_ALLOWED.value(), HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase(), t.getMessage());
   }
 
-  @ExceptionHandler(ConflictException.class)
-  @ResponseStatus(HttpStatus.CONFLICT)
-  public BaseResponseError catchConflictException(Throwable t) {
-    return new BaseResponseError(HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT.getReasonPhrase(), t.getMessage());
-  }
-
   @ExceptionHandler({InternalServerErrorException.class, Throwable.class})
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public BaseResponseError catchInternalServerErrorException(Throwable t) {
     return new BaseResponseError(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), t.getMessage());
-  }
-
-  @ExceptionHandler(BadGatewayException.class)
-  @ResponseStatus(HttpStatus.BAD_GATEWAY)
-  public BaseResponseError catchBadGatewayException(Throwable t) {
-    return new BaseResponseError(HttpStatus.BAD_GATEWAY.value(), HttpStatus.BAD_GATEWAY.getReasonPhrase(), t.getMessage());
   }
 }

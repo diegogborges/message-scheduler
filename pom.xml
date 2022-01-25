@@ -23,6 +23,8 @@
 		<jacoco.version>0.8.6</jacoco.version>
 		<coveralls.version>4.3.0</coveralls.version>
 		<javax-xml.version>2.3.1</javax-xml.version>
+		<openpojo.version>0.8.12</openpojo.version>
+		<plpojo.version>0.7.6</plpojo.version>
 	</properties>
 	<dependencies>
 
@@ -51,6 +53,20 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- pojo to tests -->
+		<dependency>
+			<groupId>com.openpojo</groupId>
+			<artifactId>openpojo</artifactId>
+			<version>${openpojo.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>pl.pojo</groupId>
+			<artifactId>pojo-tester</artifactId>
+			<version>${plpojo.version}</version>
 			<scope>test</scope>
 		</dependency>
 

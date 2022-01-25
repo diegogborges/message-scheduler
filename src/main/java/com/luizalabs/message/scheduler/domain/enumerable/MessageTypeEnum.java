@@ -6,7 +6,6 @@ import com.luizalabs.message.scheduler.exception.MessageTypeNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,15 +21,6 @@ public enum MessageTypeEnum {
 
   private final Integer value;
   private final String description;
-
-  public static MessageTypeEnum getValue(final Integer value) {
-    for (MessageTypeEnum e : MessageTypeEnum.values()) {
-      if (e != null && e.value.equals(value)) {
-        return e;
-      }
-    }
-    return null;
-  }
 
   @JsonCreator
   public static MessageTypeEnum find(final Integer value) {
