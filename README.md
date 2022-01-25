@@ -1,7 +1,7 @@
 <h1 align="center">Message Scheduler - Luizalabs</h1>
-<p align="center">API for message schedulling</p>
+<p align="center">API para agendamento de comunicação</p>
 
-Aplicação para criar agendamentos de comunicação por tipos de mensagens, podendo ser SMS, e-mail, push e SMS.
+Aplicação para criar agendamentos de comunicação por tipos de mensagens, podendo ser SMS, e-mail, push e WhatsApp.
 
 <div align="center">
 
