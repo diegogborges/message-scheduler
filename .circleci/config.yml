@@ -25,6 +25,11 @@ jobs:
 
 workflows:
   version: 2
+  
+  test-env-vars:
+    jobs:
+      - build:
+          context: env
 
   build-and-test:
     jobs:
