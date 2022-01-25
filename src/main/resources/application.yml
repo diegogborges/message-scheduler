@@ -15,11 +15,11 @@ spring:
   jmx:
     enabled: false
   datasource:
-    url: jdbc:mysql://localhost:3306/message-scheduler?allowPublicKeyRetrieval=true&sslMode=DISABLED
-    username: user_db
-    password: password_db
+    url: jdbc:${SPRING_DATASOURCE_ID:mysql}://${SPRING_DATASOURCE_HOST:localhost}:${SPRING_DATASOURCE_PORT:3306}/${SPRING_DATASOURCE_DATABASE:message-scheduler}?allowPublicKeyRetrieval=true&sslMode=DISABLED
+    username: ${SPRING_DATASOURCE_USERNAME:user_db}
+    password: ${SPRING_DATASOURCE_PASSWORD:password_db}
   flyway:
     baseline-on-migrate: true
     check-location: true
-    enabled: true
+    enabled: ${SPRING_FLYWAY_ENABLED:true}
     locations: classpath:/db/migration/

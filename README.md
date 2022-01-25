@@ -67,6 +67,20 @@ O `Swagger` é uma ferramenta responsável por gerar documentações de APIs de 
 
 * http://localhost:8080/swagger-ui/
 
+## Variáveis de ambiente
+
+Esta é a lista das variáveis de ambiente utilizadas pela aplicação, basta alterar os valores conforme a necessidade.
+
+| Nome | Descrição | Tipo | Valor Padrão |
+|------|:---------:|:----:|-------------:|
+| SPRING_DATASOURCE_ID | Identificador do banco de dados | `String` | `mysql` |
+| SPRING_DATASOURCE_HOST | Endereço de conexão com o banco de dados | `String` | `localhost` |
+| SPRING_DATASOURCE_PORT | Porta de conexão com o banco de dados | `Integer` | `3306` |
+| SPRING_DATASOURCE_DATABASE | Nome do banco de dados | `String` | `message-scheduler` |
+| SPRING_DATASOURCE_USERNAME | Usuário do banco de dados | `String` | `user_db` |
+| SPRING_DATASOURCE_PASSWORD | Senha do banco de dados | `String` | `password_db` |
+| SPRING_FLYWAY_ENABLED | Habilitar o Flyway | `Boolean` | `true` |
+
 ## Autor
 
 Aplicação desenvolvida por Diego Gomes Borges.
