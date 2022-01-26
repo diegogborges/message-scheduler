@@ -5,7 +5,8 @@ Aplicação para criar agendamentos de comunicação por tipos de mensagens, pod
 
 <div align="center">
 
-[![CircleCI](https://circleci.com/gh/diegogborges/message-scheduler/tree/main.svg?style=svg)](https://circleci.com/gh/diegogborges/message-scheduler/tree/main) [![Coverage Status](https://coveralls.io/repos/github/diegogborges/message-scheduler/badge.svg?branch=main)](https://coveralls.io/github/diegogborges/message-scheduler?branch=main)
+[![CircleCI](https://circleci.com/gh/diegogborges/message-scheduler/tree/main.svg?style=svg)](https://circleci.com/gh/diegogborges/message-scheduler/tree/main) 
+[![Coverage Status](https://coveralls.io/repos/github/diegogborges/message-scheduler/badge.svg?branch=main)](https://coveralls.io/github/diegogborges/message-scheduler?branch=main)
 
 </div>
 
