@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -69,18 +70,18 @@ public class MessageSchedulerController {
   }
 
   @DeleteMapping("/{messageScheduledId}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   @Operation(summary = "Delete Message Scheduler")
   @ApiResponses(
       value = {
-          @ApiResponse(responseCode = "200", description = "OK"),
+          @ApiResponse(responseCode = "204", description = "No Content"),
           @ApiResponse(responseCode = "400", description = "Invalid id"),
           @ApiResponse(responseCode = "404", description = "Message Scheduler not found"),
           @ApiResponse(responseCode = "500", description = "Internal Server Error"),
           @ApiResponse(responseCode = "502", description = "Bad Gateway")
       }
   )
-  public ResponseEntity<Boolean> delete(@PathVariable Long messageScheduledId) {
+  public void delete(@PathVariable Long messageScheduledId) {
     messageSchedulerService.delete(messageScheduledId);
-    return new ResponseEntity<>(true, null, HttpStatus.OK);
   }
 }

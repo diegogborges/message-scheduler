@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,8 +41,6 @@ class MessageSchedulerControllerTest extends BaseEndpointTest {
       "{0}{1}", "/v1/", "message/scheduler");
 
   @Test
-  @Rollback
-  @Transactional
   @SneakyThrows
   void saveMessageScheduler() {
     final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
@@ -60,24 +57,18 @@ class MessageSchedulerControllerTest extends BaseEndpointTest {
   }
 
   @Test
-  @Rollback
-  @Transactional
   @SneakyThrows
   void saveMessageSchedulerWithNonExistentMessageType() {
     final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
     messageSchedulerRequest.setMessageTypes(Arrays.asList(5, MessageTypeEnum.WHATSAPP.getValue()));
-    final String json = this.mockMvc.perform(post(urlPathResource)
-        .content(asJsonString(messageSchedulerRequest))
-        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(status().is5xxServerError())
-        .andReturn()
-        .getResponse()
-        .getContentAsString();
+    super.postIsBadRequest(
+        this.urlPathResource,
+        messageSchedulerRequest,
+        "Message Type with id: 5 not found!"
+    );
   }
 
   @Test
-  @Rollback
-  @Transactional
   @SneakyThrows
   void saveMessageSchedulerWithNullListMessageType() {
     final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
@@ -97,8 +88,30 @@ class MessageSchedulerControllerTest extends BaseEndpointTest {
   }
 
   @Test
-  @Rollback
-  @Transactional
+  @SneakyThrows
+  void saveMessageSchedulerWithSendDateLessThanCurrentDate() {
+    final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
+    messageSchedulerRequest.setSendDate(LocalDateTime.now().minusMinutes(1));
+    super.postIsBadRequest(
+        this.urlPathResource,
+        messageSchedulerRequest,
+        "Send date must be greater than the current date!"
+    );
+  }
+
+  @Test
+  @SneakyThrows
+  void saveMessageSchedulerWithSendDateEqualCurrentDate() {
+    final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
+    messageSchedulerRequest.setSendDate(LocalDateTime.now());
+    super.postIsBadRequest(
+        this.urlPathResource,
+        messageSchedulerRequest,
+        "Send date must be greater than the current date!"
+    );
+  }
+
+  @Test
   @SneakyThrows
   void saveMessageSchedulerWithEmptyListMessageType() {
     final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
@@ -131,7 +144,7 @@ class MessageSchedulerControllerTest extends BaseEndpointTest {
   @SneakyThrows
   void saveMessageSchedulerWithWrongPath() {
     super.patchIsMethodNotAllowed(
-        this.urlPathResource+"/wrong",
+        this.urlPathResource + "/wrong",
         null,
         "Request method 'PATCH' not supported"
     );
@@ -147,7 +160,7 @@ class MessageSchedulerControllerTest extends BaseEndpointTest {
     );
     final String json = this.mockMvc.perform(delete(urlPathResource + "/1")
         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(status().isOk())
+        .andExpect(status().isNoContent())
         .andReturn()
         .getResponse()
         .getContentAsString();

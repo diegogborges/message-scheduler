@@ -18,7 +18,7 @@ class SwaggerControllerTest extends BaseControllerTest {
   void redirectWithSuccess() {
     RestTemplate restTemplate = new RestTemplate();
     ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + port + "/swagger", String.class);
-    Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
+    Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     Assertions.assertNotNull(response.getBody());
     Assertions.assertTrue(response.getBody().contains("Swagger UI"));
   }
