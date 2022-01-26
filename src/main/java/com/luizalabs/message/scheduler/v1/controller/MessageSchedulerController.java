@@ -3,6 +3,7 @@ package com.luizalabs.message.scheduler.v1.controller;
 import com.luizalabs.message.scheduler.service.MessageSchedulerService;
 import com.luizalabs.message.scheduler.v1.model.request.MessageSchedulerRequest;
 import com.luizalabs.message.scheduler.v1.model.response.MessageSchedulerResponse;
+import com.luizalabs.message.scheduler.v1.validator.MessageSchedulerValidator;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,10 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class MessageSchedulerController {
 
   private final MessageSchedulerService messageSchedulerService;
+  private final MessageSchedulerValidator messageSchedulerValidator;
 
   @Autowired
-  public MessageSchedulerController(MessageSchedulerService messageSchedulerService) {
+  public MessageSchedulerController(MessageSchedulerService messageSchedulerService,
+                                    MessageSchedulerValidator messageSchedulerValidator) {
     this.messageSchedulerService = messageSchedulerService;
+    this.messageSchedulerValidator = messageSchedulerValidator;
   }
 
   @GetMapping("/{messageScheduledId}")
@@ -61,10 +66,11 @@ public class MessageSchedulerController {
       }
   )
   public ResponseEntity<MessageSchedulerResponse> save(
-      @RequestBody @Valid MessageSchedulerRequest messageSchedulerInput) {
-
+      @RequestBody @Valid MessageSchedulerRequest messageSchedulerRequest,
+      BindingResult bindingResult) {
+    messageSchedulerValidator.validatesFieldsByMessageType(messageSchedulerRequest, bindingResult);
     final MessageSchedulerResponse messageSchedulerResponse
-        = this.messageSchedulerService.save(messageSchedulerInput);
+        = this.messageSchedulerService.save(messageSchedulerRequest);
 
     return new ResponseEntity<>(messageSchedulerResponse, null, HttpStatus.CREATED);
   }

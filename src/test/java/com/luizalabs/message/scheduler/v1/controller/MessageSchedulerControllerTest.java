@@ -70,6 +70,74 @@ class MessageSchedulerControllerTest extends BaseEndpointTest {
 
   @Test
   @SneakyThrows
+  void saveMessageSchedulerMessageTypeWithSmsWithoutPhone() {
+    final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
+    messageSchedulerRequest.setMessageTypes(Arrays.asList(MessageTypeEnum.SMS.getValue()));
+    messageSchedulerRequest.setPhone(null);
+    super.postIsBadRequest(
+        this.urlPathResource,
+        messageSchedulerRequest,
+        "[phone is required]"
+    );
+  }
+
+  @Test
+  @SneakyThrows
+  void saveMessageSchedulerMessageTypeWithWhatsAppWithoutPhone() {
+    final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
+    messageSchedulerRequest.setMessageTypes(Arrays.asList(MessageTypeEnum.WHATSAPP.getValue()));
+    messageSchedulerRequest.setPhone(null);
+    super.postIsBadRequest(
+        this.urlPathResource,
+        messageSchedulerRequest,
+        "[phone is required]"
+    );
+  }
+
+  @Test
+  @SneakyThrows
+  void saveMessageSchedulerMessageTypeWithEmailWithoutEmail() {
+    final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
+    messageSchedulerRequest.setMessageTypes(Arrays.asList(MessageTypeEnum.MAIL.getValue()));
+    messageSchedulerRequest.setEmail(null);
+    super.postIsBadRequest(
+        this.urlPathResource,
+        messageSchedulerRequest,
+        "[email is required]"
+    );
+  }
+
+  @Test
+  @SneakyThrows
+  void saveMessageSchedulerMessageTypeWithPushEmailWithoutEmailAndCustomerUuid() {
+    final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
+    messageSchedulerRequest.setMessageTypes(Arrays.asList(MessageTypeEnum.PUSH.getValue(), MessageTypeEnum.MAIL.getValue()));
+    messageSchedulerRequest.setEmail(null);
+    messageSchedulerRequest.setCustomerUuid(null);
+    super.postIsBadRequest(
+        this.urlPathResource,
+        messageSchedulerRequest,
+        "[customerUuid is required, email is required]"
+    );
+  }
+
+  @Test
+  @SneakyThrows
+  void saveMessageSchedulerMessageTypeWithWithNullListMessageTypeWithoutEmailAndCustomerUuidAndPhone() {
+    final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
+    messageSchedulerRequest.setMessageTypes(null);
+    messageSchedulerRequest.setEmail(null);
+    messageSchedulerRequest.setCustomerUuid(null);
+    messageSchedulerRequest.setPhone(null);
+    super.postIsBadRequest(
+        this.urlPathResource,
+        messageSchedulerRequest,
+        "[phone is required, email is required, customerUuid is required]"
+    );
+  }
+
+  @Test
+  @SneakyThrows
   void saveMessageSchedulerWithNullListMessageType() {
     final MessageSchedulerRequest messageSchedulerRequest = getMessageTypeScheduler();
     messageSchedulerRequest.setMessageTypes(null);
@@ -136,7 +204,7 @@ class MessageSchedulerControllerTest extends BaseEndpointTest {
     super.postIsBadRequest(
         this.urlPathResource,
         null,
-        "Required request body is missing: public org.springframework.http.ResponseEntity<com.luizalabs.message.scheduler.v1.model.response.MessageSchedulerResponse> com.luizalabs.message.scheduler.v1.controller.MessageSchedulerController.save(com.luizalabs.message.scheduler.v1.model.request.MessageSchedulerRequest)"
+        "Required request body is missing: public org.springframework.http.ResponseEntity<com.luizalabs.message.scheduler.v1.model.response.MessageSchedulerResponse> com.luizalabs.message.scheduler.v1.controller.MessageSchedulerController.save(com.luizalabs.message.scheduler.v1.model.request.MessageSchedulerRequest,org.springframework.validation.BindingResult)"
     );
   }
 

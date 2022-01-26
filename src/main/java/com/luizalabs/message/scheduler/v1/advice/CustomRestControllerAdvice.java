@@ -4,6 +4,7 @@ package com.luizalabs.message.scheduler.v1.advice;
 import com.luizalabs.message.scheduler.exception.InternalServerErrorException;
 import com.luizalabs.message.scheduler.exception.InvalidSendDateException;
 import com.luizalabs.message.scheduler.exception.MessageTypeNotFoundException;
+import com.luizalabs.message.scheduler.exception.MissingParameterException;
 import com.luizalabs.message.scheduler.exception.NotFoundException;
 import com.luizalabs.message.scheduler.v1.model.response.BaseResponseError;
 
@@ -26,7 +27,8 @@ public class CustomRestControllerAdvice {
       MethodArgumentNotValidException.class,
       ValidationException.class,
       MessageTypeNotFoundException.class,
-      InvalidSendDateException.class
+      InvalidSendDateException.class,
+      MissingParameterException.class
   })
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public BaseResponseError catchBadRequestException(Throwable t) {

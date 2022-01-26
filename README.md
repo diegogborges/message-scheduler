@@ -26,7 +26,7 @@ Caso este recurso não exista, ele pode ser adquirido e instalado na máquina lo
 docker-compose up -d
 ```
 
-O banco de dados sera criado, porém, ele só sera populado pelo `Flyway` após a primeira execução.
+O banco de dados será criado, porém, ele só será populado pelo `Flyway` após a primeira execução.
 
 Por fim, com o `Java 11` instalado, basta baixar as dependências do projeto e realizar a compilação:
 
@@ -60,7 +60,7 @@ Este projeto possui o CI integrado com o `CircleCI/Coveralls`.
 
 Esta API possui os seguintes endpoints:
 
-* __/v1/message/scheduler/__ - Obter, cadastrar e remover clientes;
+* __/v1/message/scheduler/__ - Obter, cadastrar e remover mensagens agendadas;
 * __/actuator/health__ - Obter o status da aplicação (gerado automaticamente pelo `Actuator`);
 
 O `Swagger` é uma ferramenta responsável por gerar documentações de APIs de maneira automática:

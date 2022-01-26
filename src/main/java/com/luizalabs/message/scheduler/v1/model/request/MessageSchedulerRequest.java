@@ -4,14 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.luizalabs.message.scheduler.domain.enumerable.MessageTypeEnum;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.Builder;
@@ -42,7 +39,7 @@ public class MessageSchedulerRequest {
   @Schema(required = false, description = "Message to communication", example = "Hello everyone")
   private String message;
 
-  @Schema(required = false, description = "Message Types, can be empty to save for all types", example = "[1,2,3,4]")
+  @Schema(required = false, description = "Message Types, can be empty to save for all types or using their ids, 1 - SMS, 2 - email, 3 - push, 4 - WhatsApp", example = "[1,2,3,4]")
   private List<Integer> messageTypes;
 
   public void getAllMessageTypes() {
