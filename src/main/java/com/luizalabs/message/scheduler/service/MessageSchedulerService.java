@@ -7,12 +7,14 @@ import com.luizalabs.message.scheduler.domain.entity.MessageType;
 import com.luizalabs.message.scheduler.domain.entity.MessageTypeScheduler;
 import com.luizalabs.message.scheduler.domain.enumerable.MessageStatusEnum;
 import com.luizalabs.message.scheduler.domain.enumerable.MessageTypeEnum;
+import com.luizalabs.message.scheduler.exception.InvalidSendDateException;
 import com.luizalabs.message.scheduler.exception.NotFoundException;
 import com.luizalabs.message.scheduler.repository.MessageSchedulerRepository;
 import com.luizalabs.message.scheduler.v1.model.request.MessageSchedulerRequest;
 import com.luizalabs.message.scheduler.v1.model.response.MessageSchedulerResponse;
 import com.luizalabs.message.scheduler.v1.model.response.MessageTypeDto;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +37,9 @@ public class MessageSchedulerService {
   }
 
   public MessageSchedulerResponse save(final MessageSchedulerRequest messageSchedulerRequest) {
+
+    validateSendDate(messageSchedulerRequest);
+
     final MessageScheduler messageScheduler =
         this.messageSchedulerAssembler.toMessageSchedulerModel(messageSchedulerRequest);
 
@@ -61,6 +66,12 @@ public class MessageSchedulerService {
     return messageSchedulerRepository.findById(messageScheduledId)
         .orElseThrow(() -> new NotFoundException(
             String.format("Message Scheduler with id: %s not found!", messageScheduledId)));
+  }
+
+  private void validateSendDate(final MessageSchedulerRequest messageSchedulerRequest) {
+    if (LocalDateTime.now().isAfter(messageSchedulerRequest.getSendDate())) {
+      throw new InvalidSendDateException("Send date must be greater than the current date!");
+    }
   }
 
   private List<MessageTypeScheduler> prepareListMessageType(
